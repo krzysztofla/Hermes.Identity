@@ -1,5 +1,6 @@
 using System.Reflection;
 using Autofac;
+using AutoMapper;
 using Hermes.Identity.Common.Markers;
 using Hermes.Identity.Services;
 

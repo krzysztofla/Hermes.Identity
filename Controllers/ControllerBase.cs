@@ -4,11 +4,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hermes.Identity.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public abstract class ControllerBase : Controller
     {
         private readonly ICommandDispacher CommandDispatcher;
+
+        public ControllerBase()
+        {
+
+        }
+
         protected ControllerBase(ICommandDispacher commandDispatcher)
         {
             CommandDispatcher = commandDispatcher;

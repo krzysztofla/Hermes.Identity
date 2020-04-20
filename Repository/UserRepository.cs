@@ -16,7 +16,7 @@ namespace Hermes.Identity.Repository
         {
             var client = new MongoClient(settings.ConnectionString);
             this.database = client.GetDatabase(settings.DatabaseName);
-            Users.InsertOneAsync(new User("krzysztof.lkach@icik.com","1231332"));
+            //Users.InsertOneAsync(new User("krzysztof.lkach@icik.com","1231332"));
         }
 
         public async Task Add(User user) => await Users.InsertOneAsync(user);

@@ -22,6 +22,7 @@ namespace Hermes.Identity.Controllers
             return Created($"users/{command.Email}", null);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Get()
         {
             var users = await userService.GetAll();

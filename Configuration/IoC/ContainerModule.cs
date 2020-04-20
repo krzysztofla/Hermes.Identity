@@ -1,5 +1,6 @@
 using Autofac;
 using Hermes.Identity.Configuration.IoC.Modules;
+using Hermes.Identity.Mapping;
 using Microsoft.Extensions.Configuration;
 
 namespace Hermes.Identity.Configuration.IoC
@@ -15,6 +16,8 @@ namespace Hermes.Identity.Configuration.IoC
 
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterInstance(MappingConfig.Initialize())
+                   .SingleInstance();
             builder.RegisterModule<ServiceModule>();
             builder.RegisterModule<CommandModule>();
             builder.RegisterModule<RepositoryModule>();

@@ -24,18 +24,6 @@ namespace Hermes.Identity
             Configuration = builder.Build();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime applicationLifetime)
-        {
-            MongoConfiguration.Initialize();
-            app.UseRouting();
-            app.UseHttpsRedirection();
-            app.UseAuthorization();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-        }
-
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule(new ContainerModule(Configuration));
@@ -47,10 +35,30 @@ namespace Hermes.Identity
 
             services.AddSingleton<IMongoSettings>(sp =>
                 sp.GetRequiredService<IOptions<MongoSettings>>().Value);
-                
+
             services.AddMvc();
             services.AddLogging();
             services.AddControllers();
+        }
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime applicationLifetime)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            MongoConfiguration.Initialize();
+
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            //app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }
