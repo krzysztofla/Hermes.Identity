@@ -26,7 +26,7 @@ namespace Hermes.Identity.Repository
         public async Task<IEnumerable<User>> Browse() => await Users.AsQueryable().ToListAsync();
 
         public async Task Update(User user) => await Users.ReplaceOneAsync(u => u.Id == user.Id, user);
-        
+
         public async Task Delete(Guid id) => await Users.DeleteOneAsync(u => u.Id == id);
 
         public async Task<User> Get(Guid id) => await Users.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);

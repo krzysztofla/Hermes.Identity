@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using System;
+
 namespace Hermes.Identity.Services
 {
     public class Encrypter : IEncrypter
@@ -24,9 +25,10 @@ namespace Hermes.Identity.Services
             return Convert.ToBase64String(pbk.GetBytes(SaltSize));
         }
 
-        private static byte[] GetBytes(string value) {
-            var bytes = new byte[value.Length*sizeof(char)];
-            Buffer.BlockCopy(value.ToCharArray(), 0 , bytes, 0, bytes.Length);
+        private static byte[] GetBytes(string value)
+        {
+            var bytes = new byte[value.Length * sizeof(char)];
+            Buffer.BlockCopy(value.ToCharArray(), 0, bytes, 0, bytes.Length);
             return bytes;
         }
     }

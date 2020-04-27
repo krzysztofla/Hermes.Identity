@@ -29,5 +29,11 @@ namespace Hermes.Identity.Controllers
 
             return Json(users);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Login([FromBody] LoginUser command)
+        {
+            return Json("");
+        }
     }
 }
