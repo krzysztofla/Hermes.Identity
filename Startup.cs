@@ -1,8 +1,12 @@
 using Autofac;
 using Hermes.Identity.Configuration.IoC;
 using Hermes.Identity.DbConfiguration;
+using Hermes.Identity.Services;
+using Hermes.Identity.Settings;
+using Hermes.Identity.WebApi.DbConfiguration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -36,6 +40,9 @@ namespace Hermes.Identity
             services.AddSingleton<IMongoSettings>(sp =>
                 sp.GetRequiredService<IOptions<MongoSettings>>().Value);
 
+            services.AddDbContext<SqlAzConnectionContext>(options =>
+                     options.UseSqlServer(Configuration.GetConnectionString("HermesIdentityDb")));
+
             services.AddMvc();
             services.AddLogging();
             services.AddControllers();
@@ -45,6 +52,14 @@ namespace Hermes.Identity
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+
+            var initialSettings = app.ApplicationServices.GetService<InitialSettings>();
+
+            if (initialSettings.SeedData)
+            {
+                var dataInitializer = app.ApplicationServices.GetService<IDataInitializer>();
+                //dataInitializer.SeedAsync();
             }
 
             MongoConfiguration.Initialize();
