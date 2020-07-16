@@ -16,8 +16,7 @@ namespace Hermes.Identity.Command.Handlers
         
         public async Task Handle(CreateUser command)
         {
-            await userService.Register(command.Email,
-                    command.Username, command.Password);
+            await userService.Register(command.Username, command.Email, command.Password);
         }
     }
 }

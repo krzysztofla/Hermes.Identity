@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Hermes.Identity.DbConfiguration;
 using Hermes.Identity.Models;
 using Hermes.Identity.WebApi.DbConfiguration;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -14,6 +15,7 @@ namespace Hermes.Identity.Repository
     {
         private readonly SqlAzConnectionContext _context;
 
+
         public UserRepository(SqlAzConnectionContext context)
         {
             _context = context;
@@ -21,7 +23,7 @@ namespace Hermes.Identity.Repository
 
         public async Task Add(User user)
         {
-            //await _context.Database.EnsureCreatedAsync(); move to startup
+            await _context.Database.EnsureCreatedAsync();
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
         }

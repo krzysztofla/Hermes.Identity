@@ -34,12 +34,6 @@ namespace Hermes.Identity
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<MongoSettings>(
-                    Configuration.GetSection(nameof(MongoSettings)));
-
-            services.AddSingleton<IMongoSettings>(sp =>
-                sp.GetRequiredService<IOptions<MongoSettings>>().Value);
-
             services.AddDbContext<SqlAzConnectionContext>(options =>
                      options.UseSqlServer(Configuration.GetConnectionString("HermesIdentityDb")));
 
@@ -59,10 +53,8 @@ namespace Hermes.Identity
             if (initialSettings.SeedData)
             {
                 var dataInitializer = app.ApplicationServices.GetService<IDataInitializer>();
-                //dataInitializer.SeedAsync();
+                dataInitializer.SeedAsync();
             }
-
-            MongoConfiguration.Initialize();
 
             app.UseHttpsRedirection();
 

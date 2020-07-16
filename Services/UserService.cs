@@ -25,12 +25,12 @@ namespace Hermes.Identity.Services
 
         public async Task Register(string name, string email, string password)
         {
-            //var user = await userRepository.GetByEmail(email);
+            var user = await userRepository.GetByEmail(email);
 
-            //if (user != null)
-            //{
-            //    throw new IdentityException(IdentityErrorCodes.user_in_use, $"User with provided {email} is already in use exist!");
-            //}
+            if (user != null)
+            {
+                throw new IdentityException(IdentityErrorCodes.user_in_use, $"User with provided {email} is already in use exist!");
+            }
 
             var newUser = new User(email, name);
             newUser.SetPassword(password, encrypter);
