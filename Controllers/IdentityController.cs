@@ -22,11 +22,18 @@ namespace Hermes.Identity.Controllers
             return Created($"users/{command.Email}", null);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Get()
         {
             var users = await userService.GetAll();
 
             return Json(users);
         }
+
+        //[HttpPost]
+        //public async Task<IActionResult> Login([FromBody]LoginUser command)
+        //{
+        //    return Json("");
+        //}
     }
 }

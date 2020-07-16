@@ -7,8 +7,8 @@ namespace Hermes.Identity.Repository
 {
     public interface IUserRepository : IRepository
     {
-        Task<User> Get(string email);
-        Task<User> Get(Guid id);
+        Task<User> GetByEmail(string email);
+        Task<User> GetById(Guid id);
         Task Add(User user);
         Task Update(User user);
         Task Delete(Guid id);

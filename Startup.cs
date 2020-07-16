@@ -1,8 +1,12 @@
 using Autofac;
 using Hermes.Identity.Configuration.IoC;
 using Hermes.Identity.DbConfiguration;
+using Hermes.Identity.Services;
+using Hermes.Identity.Settings;
+using Hermes.Identity.WebApi.DbConfiguration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,33 +28,44 @@ namespace Hermes.Identity
             Configuration = builder.Build();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime applicationLifetime)
-        {
-            MongoConfiguration.Initialize();
-            app.UseRouting();
-            app.UseHttpsRedirection();
-            app.UseAuthorization();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-        }
-
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule(new ContainerModule(Configuration));
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<MongoSettings>(
-                    Configuration.GetSection(nameof(MongoSettings)));
+            services.AddDbContext<SqlAzConnectionContext>(options =>
+                     options.UseSqlServer(Configuration.GetConnectionString("HermesIdentityDb")));
 
-            services.AddSingleton<IMongoSettings>(sp =>
-                sp.GetRequiredService<IOptions<MongoSettings>>().Value);
-                
             services.AddMvc();
             services.AddLogging();
             services.AddControllers();
+        }
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime applicationLifetime)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            var initialSettings = app.ApplicationServices.GetService<InitialSettings>();
+
+            if (initialSettings.SeedData)
+            {
+                var dataInitializer = app.ApplicationServices.GetService<IDataInitializer>();
+                dataInitializer.SeedAsync();
+            }
+
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            //app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

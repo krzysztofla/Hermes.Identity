@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using Hermes.Identity.Common;
 using Hermes.Identity.Models;
 using Hermes.Identity.Repository;
@@ -13,17 +14,20 @@ namespace Hermes.Identity.Services
 
         private readonly IEncrypter encrypter;
 
-        public UserService(IUserRepository userRepository, IEncrypter encrypter)
+        private readonly IMapper mapper;
+
+        public UserService(IUserRepository userRepository, IEncrypter encrypter, IMapper mapper)
         {
             this.encrypter = encrypter;
             this.userRepository = userRepository;
+            this.mapper = mapper;
         }
 
         public async Task Register(string name, string email, string password)
         {
-            var user = await userRepository.Get(email);
+            var user = await userRepository.GetByEmail(email);
 
-            if (user == null)
+            if (user != null)
             {
                 throw new IdentityException(IdentityErrorCodes.user_in_use, $"User with provided {email} is already in use exist!");
             }
@@ -31,12 +35,12 @@ namespace Hermes.Identity.Services
             var newUser = new User(email, name);
             newUser.SetPassword(password, encrypter);
 
-            await userRepository.Add(user);
+            await userRepository.Add(newUser);
         }
 
         public async Task Login(string email, string password)
         {
-            var user = await userRepository.Get(email);
+            var user = await userRepository.GetByEmail(email);
 
             if (user == null)
             {
@@ -53,7 +57,7 @@ namespace Hermes.Identity.Services
 
         public async Task Update(Guid id, string name, string email, string password)
         {
-            var user = await userRepository.Get(id);
+            var user = await userRepository.GetById(id);
             if (user == null)
             {
                 throw new IdentityException(IdentityErrorCodes.user_in_use, $"User with provided {email} doesn't exist!");
@@ -70,7 +74,7 @@ namespace Hermes.Identity.Services
 
         public async Task Delete(Guid id)
         {
-            var user = await userRepository.Get(id);
+            var user = await userRepository.GetById(id);
             if (user == null)
             {
                 throw new IdentityException(IdentityErrorCodes.user_in_use, $"User with provided {user.Email} doesn't exist!");

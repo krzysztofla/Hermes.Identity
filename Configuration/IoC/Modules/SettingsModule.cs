@@ -1,7 +1,7 @@
 using Autofac;
 using Microsoft.Extensions.Configuration;
-using Hermes.Identity.DbConfiguration;
 using Hermes.Identity.Settings;
+using Hermes.Identity.Extensions;
 
 namespace Hermes.Identity.Configuration.IoC.Modules
 {
@@ -16,10 +16,8 @@ namespace Hermes.Identity.Configuration.IoC.Modules
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterInstance(configuration.Get<InitialSettings>())
+            builder.RegisterInstance(configuration.GetSettings<InitialSettings>())
                    .SingleInstance();
-			builder.RegisterInstance(configuration.Get<MongoSettings>())
-	               .SingleInstance();
 		}  
     }
 }
