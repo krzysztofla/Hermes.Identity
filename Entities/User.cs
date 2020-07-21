@@ -2,7 +2,7 @@ using System;
 using Hermes.Identity.Common;
 using Hermes.Identity.Services;
 
-namespace Hermes.Identity.Models
+namespace Hermes.Identity.Entities
 {
     public class User
     {
@@ -39,7 +39,7 @@ namespace Hermes.Identity.Models
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                throw new IdentityException("empty name", "User name cannot be empty");
+                throw new IdentityException("User name cannot be empty");
             }
             Name = name;
             SetUpdateTime();
@@ -49,7 +49,7 @@ namespace Hermes.Identity.Models
         {
             if (string.IsNullOrWhiteSpace(email))
             {
-                throw new IdentityException("empty email", "User email cannot be empty");
+                throw new IdentityException("User email cannot be empty");
             }
             Email = email.ToLowerInvariant();
             SetUpdateTime();
@@ -59,7 +59,7 @@ namespace Hermes.Identity.Models
         {
             if (string.IsNullOrWhiteSpace(password))
             {
-                throw new IdentityException("empty email", "User password cannot be empty");
+                throw new IdentityException("User password cannot be empty");
             }
             Salt = encrypter.GetSalt(password);
             Password = encrypter.GetHash(password, Salt);

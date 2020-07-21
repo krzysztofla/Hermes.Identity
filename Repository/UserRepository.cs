@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Hermes.Identity.DbConfiguration;
-using Hermes.Identity.Models;
+using Hermes.Identity.Entities;
 using Hermes.Identity.WebApi.DbConfiguration;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;

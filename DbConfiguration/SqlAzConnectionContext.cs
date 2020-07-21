@@ -1,7 +1,6 @@
 using Hermes.Identity.DbConfiguration;
-using Hermes.Identity.Models;
+using Hermes.Identity.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace Hermes.Identity.WebApi.DbConfiguration
 {

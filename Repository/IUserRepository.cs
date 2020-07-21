@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Hermes.Identity.Models;
+using Hermes.Identity.Entities;
 
 namespace Hermes.Identity.Repository
 {

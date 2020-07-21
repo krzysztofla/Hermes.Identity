@@ -1,4 +1,4 @@
-﻿using Hermes.Identity.Models;
+﻿using Hermes.Identity.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 

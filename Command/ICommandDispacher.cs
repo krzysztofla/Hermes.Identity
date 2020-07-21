@@ -4,6 +4,6 @@ namespace Hermes.Identity.Command
 {
     public interface ICommandDispacher
     {
-         Task Dispatch<T>(T command) where T : ICommand;
+         Task SendAsync<T>(T command) where T : ICommand;
     }
 }

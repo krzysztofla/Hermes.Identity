@@ -8,14 +8,14 @@ namespace Hermes.Identity.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody]LoginUser command)
-        {
-            command.TokenId = Guid.NewGuid();
-            await Dispatch(command);
-            //var jwt = _cache.GetJwt(command.TokenId);
+        //[HttpPost]
+        //public async Task<IActionResult> Post([FromBody]LoginUser command)
+        //{
+        //    command.TokenId = Guid.NewGuid();
+        //    await SendAsync(command);
+        //    //var jwt = _cache.GetJwt(command.TokenId);
 
-            return Json("jwt");
-        }
+        //    return Json("jwt");
+        //}
     }
 }
