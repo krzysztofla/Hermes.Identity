@@ -2,15 +2,12 @@
 using Hermes.Identity.Repository;
 using Hermes.Identity.Settings;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Hermes.Identity.Configuration.IoC.Modules
 {
-	public class MongoModule : Autofac.Module
+    public class MongoModule : Autofac.Module
 	{
 		protected override void Load(ContainerBuilder builder)
 		{
