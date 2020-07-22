@@ -1,13 +1,14 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Hermes.Identity.Command.User;
 using Hermes.Identity.Common;
 using Hermes.Identity.Services;
 
 namespace Hermes.Identity.Entities
 {
-    public class User
+    public class User : AggregateRoot
     {
-        public Guid Id { get; protected set; }
-
         public string Name { get; protected set; }
 
         public string Surname { get; protected set; }
@@ -17,7 +18,9 @@ namespace Hermes.Identity.Entities
         public string Salt { get; protected set; }
 
         public string Password { get; protected set; }
-        
+
+        public string Role { get; private set; }
+
         public DateTime CreatedAt { get; protected set; }
 
         public DateTime UpdatedAt { get; protected set; }
@@ -27,12 +30,13 @@ namespace Hermes.Identity.Entities
 
         }
 
-        public User(string email, string name)
+        public User(string email, string name, IEnumerable<string> permissions = null)
         {
             Id = Guid.NewGuid();
             SetName(name); 
             SetEmail(email);
             CreatedAt = DateTime.UtcNow;
+            SetRole("admin");
         }
 
         public void SetName(string name)
@@ -67,6 +71,15 @@ namespace Hermes.Identity.Entities
 
         public void SetUpdateTime() {
             UpdatedAt = DateTime.UtcNow;
+        }
+
+        public void SetRole(string role)
+        {
+            if (!Entities.Role.IsValid(role))
+            {
+                throw new Exception(role);
+            }
+            Role = role.ToLowerInvariant();
         }
 
         public bool ValidatePassword(string password, IEncrypter encrypter)

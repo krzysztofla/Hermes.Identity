@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Hermes.Identity.Events
 {
-    interface IDomainEvent
+    public interface IDomainEvent
     {
     }
 }

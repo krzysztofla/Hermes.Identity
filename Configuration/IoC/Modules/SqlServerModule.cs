@@ -1,8 +1,6 @@
 using System.Reflection;
 using Autofac;
-using Hermes.Identity.DbConfiguration;
 using Hermes.Identity.Repository;
-using MongoDB.Driver;
 
 namespace Hermes.Identity.Configuration.IoC.Modules
 {
