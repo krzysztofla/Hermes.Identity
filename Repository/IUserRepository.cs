@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Hermes.Identity.Entities;
+using Hermes.Identity.Mongo.Documents;
 
 namespace Hermes.Identity.Repository
 {
@@ -9,9 +10,8 @@ namespace Hermes.Identity.Repository
     {
         Task<User> GetByEmail(string email);
         Task<User> GetById(Guid id);
-        Task Add(User user);
-        Task Update(User user);
+        Task Add(UserDocument userDocument);
+        Task Update(UserDocument userDocument);
         Task Delete(Guid id);
-        Task<IEnumerable<User>> Browse();
     }
 }

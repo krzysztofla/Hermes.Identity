@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Hermes.Identity.Command;
 using Hermes.Identity.Command.User;
+using Hermes.Identity.Dto;
 using Hermes.Identity.Entities;
 using Hermes.Identity.Query;
 using Hermes.Identity.Query.User;
@@ -27,9 +29,9 @@ namespace Hermes.Identity.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(Guid id)
         {
-            var x = await QueryAsync<BrowseUsers, IEnumerable<User>>(new BrowseUsers());
+            var x = await QueryAsync<BrowseUser, UserDto>(new BrowseUser(id));
 
             return Json(x);
         }

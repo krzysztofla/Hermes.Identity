@@ -1,13 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Hermes.Identity.DbConfiguration;
+using AutoMapper;
 using Hermes.Identity.Entities;
-using Hermes.Identity.Mongo;
 using Hermes.Identity.Mongo.Documents;
-using Hermes.Identity.Settings;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 namespace Hermes.Identity.Repository
@@ -16,35 +11,45 @@ namespace Hermes.Identity.Repository
     {
         private readonly IMongoCollection<UserDocument> _context;
 
-        public UserRepository(IOptions<MongoSettings> settings)
+        private readonly IMapper _mapper;
+
+        public UserRepository(IMongoDatabase context, IMapper mapper)
         {
-            _context = UserContext.CreateUserContext(settings);
+            _mapper = mapper;
+            _context = context.GetCollection<UserDocument>("UserDocument");
         }
 
-        public async Task Add(User user)
+        public async Task Add(UserDocument userDocument)
         {
-
-            _context.InsertOneAsync();
+            await _context.InsertOneAsync(userDocument);
         }
 
-        public async Task<User> GetByEmail(string email) => await _context.Users.AsQueryable().FirstOrDefaultAsync(x => x.Email == email);
-
-        public async Task<User> GetById(Guid id) => await _context.Users.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
-
-        public async Task<IEnumerable<User>> Browse() => await _context.Users.AsQueryable().ToListAsync();
-
-        public async Task Update(User user)
+        public async Task<User> GetByEmail(string email)
         {
-            _context.Users.Update(user);
-            await _context.SaveChangesAsync();
+
+            var userDocument = await _context.Find(x => x.Email == email).FirstOrDefaultAsync();
+            return _mapper.Map<UserDocument, User>(userDocument);
+
+        }
+        public async Task<User> GetById(Guid id)
+        {
+
+            var userDocument = await _context.Find(x => x.Id == id).FirstOrDefaultAsync();
+            return _mapper.Map<UserDocument, User>(userDocument);
+        }
+
+        private async Task<UserDocument> GetUserDocumentById(Guid id) => await _context.Find(x => x.Id == id).FirstOrDefaultAsync();
+
+
+
+        public async Task Update(UserDocument userDocument)
+        {
+             await _context.ReplaceOneAsync(x => x.Id == userDocument.Id, userDocument);
         }
 
         public async Task Delete(Guid id)
         {
-            var user = await GetById(id);
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            await _context.DeleteOneAsync(x => x.Id == id);
         }
-        public async Task<User> Get(Guid id) => await _context.Users.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Hermes.Identity.Entities;
+using Hermes.Identity.Mongo.Documents;
 using Hermes.Identity.Repository;
 using System.Threading.Tasks;
 
@@ -14,7 +15,7 @@ namespace Hermes.Identity.Services
 
         public async Task SeedAsync()
         {
-            var user = new User("krzysztof.lach@icloud.com", "Kris");
+            var user = new UserDocument();
             await _userRepository.Add(user);
         }
     }

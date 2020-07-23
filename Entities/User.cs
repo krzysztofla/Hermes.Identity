@@ -25,7 +25,7 @@ namespace Hermes.Identity.Entities
 
         public DateTime UpdatedAt { get; protected set; }
 
-        protected User()
+        public User()
         {
 
         }

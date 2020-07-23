@@ -1,5 +1,6 @@
 using Autofac;
 using Hermes.Identity.Configuration.IoC;
+using Hermes.Identity.Mongo;
 using Hermes.Identity.Services;
 using Hermes.Identity.Settings;
 using Microsoft.AspNetCore.Builder;
@@ -52,8 +53,6 @@ namespace Hermes.Identity
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
