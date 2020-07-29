@@ -2,7 +2,7 @@
 
 namespace Hermes.Identity.Events
 {
-    public class IdentityCreated
+    public class IdentityCreated : IDomainEvent
     {
         public User User { get; }
 

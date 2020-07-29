@@ -42,6 +42,8 @@ namespace Hermes.Identity
                 app.UseDeveloperExceptionPage();
             }
 
+
+
             MongoConfigurator.Initialize();
             var initialSettings = app.ApplicationServices.GetService<InitialSettings>();
             if (initialSettings.SeedData)
