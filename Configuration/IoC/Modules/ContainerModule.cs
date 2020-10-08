@@ -23,6 +23,7 @@ namespace Hermes.Identity.Configuration.IoC
             builder.RegisterModule<QueryModule>();
             builder.RegisterModule<MongoModule>();
             builder.RegisterModule<RepositoryModule>();
+            builder.RegisterModule<ServiceBusModule>();
             builder.RegisterModule(new SettingsModule(configuration));
         }          
     }

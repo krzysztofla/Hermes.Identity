@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Hermes.Identity.Services;
 using Hermes.Identity.Settings;
 using Microsoft.Azure.ServiceBus;
 using System;
@@ -16,23 +17,12 @@ namespace Hermes.Identity.Configuration.IoC.Modules
             builder.Register((c, p) =>
             {
                 var settings = c.Resolve<ServiceBusSettings>();
-                //var connectionDetails = MongoClientSettings.FromUrl(new MongoUrl(settings.ConnectionString));
-                //connectionDetails.SslSettings = new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
+                return new QueueClient(settings.ConnectionString, settings.QueueName);
+            })
+            .As<IQueueClient>()
+            .InstancePerLifetimeScope();
 
-                return new QueueClient(connectionDetails);
-            }).SingleInstance();
-
-            builder.Register((c, p) =>
-            {
-                var mongoClient = c.Resolve<ServiceBusModule>();
-                var settings = c.Resolve<ServiceBusSettings>();
-
-                var database = mongoClient.GetDatabase(settings.Database);
-
-                return database;
-            }).As<IServiceBus>();
-
-            var assembly = typeof(MongoModule)
+            var assembly = typeof(ServiceBusModule)
                 .GetTypeInfo()
                 .Assembly;
         }

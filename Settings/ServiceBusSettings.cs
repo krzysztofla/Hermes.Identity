@@ -7,7 +7,7 @@ namespace Hermes.Identity.Settings
 {
     public class ServiceBusSettings
     {
-        public string ServiceBusConnectionString { get; set; }
+        public string ConnectionString { get; set; }
 
         public string QueueName { get; set; }
     }

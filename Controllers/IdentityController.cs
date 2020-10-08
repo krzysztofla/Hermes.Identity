@@ -9,6 +9,7 @@ using Hermes.Identity.Query;
 using Hermes.Identity.Query.User;
 using Hermes.Identity.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.ServiceBus;
 
 namespace Hermes.Identity.Controllers
 {
