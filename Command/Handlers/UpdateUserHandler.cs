@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Hermes.Identity.Command.User;
 using Hermes.Identity.Services;
-using Hermes.Identity.Models;
+using Hermes.Identity.Entities;
 
 namespace Hermes.Identity.Command.Handlers
 {

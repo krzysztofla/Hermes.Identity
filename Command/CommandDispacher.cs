@@ -13,7 +13,7 @@ namespace Hermes.Identity.Command
             this.componentContext = componentContext;
         }
 
-        public async Task Dispatch<T>(T command) where T : ICommand
+        public async Task SendAsync<T>(T command) where T : ICommand
         {
             if (command == null)
             {

@@ -4,7 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Hermes.Identity.Common.Markers;
-using Hermes.Identity.Models;
+using Hermes.Identity.Dto;
+using Hermes.Identity.Entities;
 
 namespace Hermes.Identity.Services
 {
@@ -18,6 +19,6 @@ namespace Hermes.Identity.Services
         
         Task Delete(Guid id);
 
-        Task<IEnumerable<User>> GetAll();
+        Task<UserDto> Get(Guid id);
     }
 }

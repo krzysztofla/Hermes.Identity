@@ -18,6 +18,10 @@ namespace Hermes.Identity.Configuration.IoC.Modules
         {
             builder.RegisterInstance(configuration.GetSettings<InitialSettings>())
                    .SingleInstance();
-		}  
+            builder.RegisterInstance(configuration.GetSettings<MongoSettings>())
+                   .SingleInstance();
+            builder.RegisterInstance(configuration.GetSettings<ServiceBusSettings>())
+                   .SingleInstance();
+        }
     }
 }
