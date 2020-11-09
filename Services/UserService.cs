@@ -12,13 +12,13 @@ namespace Hermes.Identity.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository userRepository;
+        private readonly ICosmosRepository userRepository;
 
         private readonly IEncrypter encrypter;
 
         private readonly IMapper mapper;
 
-        public UserService(IUserRepository userRepository, IEncrypter encrypter, IMapper mapper)
+        public UserService(ICosmosRepository userRepository, IEncrypter encrypter, IMapper mapper)
         {
             this.encrypter = encrypter;
             this.userRepository = userRepository;

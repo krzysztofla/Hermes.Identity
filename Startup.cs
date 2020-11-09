@@ -48,8 +48,11 @@ namespace Hermes.Identity
             var initialSettings = app.ApplicationServices.GetService<InitialSettings>();
             if (initialSettings.SeedData)
             {
-                var dataInitializer = app.ApplicationServices.GetService<IDataInitializer>();
-                dataInitializer.SeedAsync();
+                if(initialSettings.Initializer.Equals("Cosmos"))
+                {
+                    var dataInitializer = app.ApplicationServices.GetService<ICosmosDataInitializer>();
+                    dataInitializer.SeedAsync();
+                }
             }
 
             app.UseHttpsRedirection();

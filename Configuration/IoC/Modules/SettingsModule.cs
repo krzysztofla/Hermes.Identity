@@ -20,6 +20,8 @@ namespace Hermes.Identity.Configuration.IoC.Modules
                    .SingleInstance();
             builder.RegisterInstance(configuration.GetSettings<MongoSettings>())
                    .SingleInstance();
+            builder.RegisterInstance(configuration.GetSettings<CosmosSettings>())
+                   .SingleInstance();
             builder.RegisterInstance(configuration.GetSettings<ServiceBusSettings>())
                    .SingleInstance();
         }
