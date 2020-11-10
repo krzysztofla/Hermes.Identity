@@ -22,42 +22,39 @@ namespace Hermes.Identity.Repository
 
         public async Task Add(UserDocument userDocument)
         {
-            await _cosmosContainer.CreateItemAsync(userDocument, new PartitionKey(userDocument.Id.ToString()));
+            await _cosmosContainer.CreateItemAsync<UserDocument>(userDocument, new PartitionKey(userDocument.Id.ToString()));
         }
 
-        public Task Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            throw new NotImplementedException();
+            await _cosmosContainer.DeleteItemAsync<UserDocument>(id.ToString(), new PartitionKey(id.ToString()));
         }
 
         public async Task<Entities.User> GetByEmail(string email)
         {
-            try
-            {
-                var queryable = _cosmosContainer.GetItemLinqQueryable<UserDocument>(false);
-                var userDocument = await queryable.Where(x => x.Email.Equals(email))
-                                                  .ToFeedIterator()
-                                                  .ReadNextAsync();
-                var user = userDocument.Resource.FirstOrDefault();
-                return _mapper.Map<UserDocument, Entities.User>(user);
-            }
-            catch (CosmosException ex)
-            {
-                return null;
-            }
+            var queryable = _cosmosContainer.GetItemLinqQueryable<UserDocument>(false);
+            var userDocument = await queryable.Where(x => x.Email.Equals(email))
+                                              .ToFeedIterator()
+                                              .ReadNextAsync();
+            var user = userDocument.Resource.FirstOrDefault();
+            return _mapper.Map<UserDocument, Entities.User>(user);
         }
 
-        public Task<Entities.User> GetById(Guid id)
+        public async Task<Entities.User> GetById(Guid id)
         {
-            throw new NotImplementedException();
+            var payload = await _cosmosContainer.ReadItemAsync<UserDocument>(id.ToString(), new PartitionKey(id.ToString()));
+            return _mapper.Map<UserDocument, Entities.User>(payload.Resource);
         }
 
-        public Task Update(UserDocument userDocument)
+        public async Task Update(UserDocument userDocument)
         {
-            throw new NotImplementedException();
+            var payload = await _cosmosContainer.ReadItemAsync<UserDocument>(userDocument.Id.ToString(), new PartitionKey(userDocument.Id.ToString()));
+            var user = payload.Resource;
+            
+            await _cosmosContainer.ReplaceItemAsync<UserDocument>(userDocument, user.Id.ToString(), new PartitionKey(user.Id.ToString()));
         }
 
-        public async Task<List<UserDocument>> Browse()
+        public async Task<List<Entities.User>> Browse()
         {
             var queryDefinition = new QueryDefinition($"SELECT * FROM c");
             FeedIterator<UserDocument> queryResultSetIterator = _cosmosContainer.GetItemQueryIterator<UserDocument>(queryDefinition);
@@ -66,12 +63,12 @@ namespace Hermes.Identity.Repository
             while (queryResultSetIterator.HasMoreResults)
             {
                 var currentResultSet = await queryResultSetIterator.ReadNextAsync();
-                foreach (UserDocument family in currentResultSet)
+                foreach (UserDocument user in currentResultSet)
                 {
-                    users.Add(family);
+                    users.Add(user);
                 }
             }
-            return null;
+            return _mapper.Map<List<UserDocument>, List<Entities.User>>(users);
         }
     }
 }
