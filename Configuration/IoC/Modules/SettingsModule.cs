@@ -24,6 +24,8 @@ namespace Hermes.Identity.Configuration.IoC.Modules
                    .SingleInstance();
             builder.RegisterInstance(configuration.GetSettings<ServiceBusSettings>())
                    .SingleInstance();
+            builder.RegisterInstance(configuration.GetSettings<JwtSettings>())
+                   .SingleInstance();
         }
     }
 }

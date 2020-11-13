@@ -20,6 +20,10 @@ namespace Hermes.Identity.Configuration.IoC.Modules
             builder.RegisterType<Encrypter>()
                    .As<IEncrypter>()
                    .SingleInstance();
+
+            builder.RegisterType<PasswordService>()
+                   .As<IPasswordService>()
+                   .SingleInstance();
         }
     }
 }

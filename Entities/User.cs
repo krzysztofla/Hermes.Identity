@@ -15,8 +15,6 @@ namespace Hermes.Identity.Entities
 
         public string Email { get; protected set; }
 
-        public string Salt { get; protected set; }
-
         public string Password { get; protected set; }
 
         public string Role { get; private set; }
@@ -59,14 +57,13 @@ namespace Hermes.Identity.Entities
             SetUpdateTime();
         }
 
-        public void SetPassword(string password, IEncrypter encrypter)
+        public void SetPassword(string password, IPasswordService passwordService)
         {
             if (string.IsNullOrWhiteSpace(password))
             {
                 throw new IdentityException("User password cannot be empty");
             }
-            Salt = encrypter.GetSalt(password);
-            Password = encrypter.GetHash(password, Salt);
+            Password = passwordService.Hash(password);
         }
 
         public void SetUpdateTime() {
@@ -81,8 +78,5 @@ namespace Hermes.Identity.Entities
             }
             Role = role.ToLowerInvariant();
         }
-
-        public bool ValidatePassword(string password, IEncrypter encrypter)
-            => Password.Equals(encrypter.GetHash(password, Salt));
     }
 }

@@ -1,4 +1,5 @@
-﻿using Hermes.Identity.Command.User;
+﻿using Hermes.Identity.Command.Identity;
+using Hermes.Identity.Command.User;
 using Hermes.Identity.Dto;
 using Hermes.Identity.Entities;
 using System;

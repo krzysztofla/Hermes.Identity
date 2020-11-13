@@ -10,11 +10,11 @@ namespace Hermes.Identity.Command.Handlers
 {
     public class SignInHandler : ICommandHandler<SignIn>
     {
-        private readonly IUserService userService;
+        private readonly IIdentityService identityService;
 
-        public SignInHandler(IUserService userService)
+        public SignInHandler(IIdentityService identityService)
         {
-            this.userService = userService;
+            this.identityService = identityService;
         }
         public async Task Handle(SignIn command)
         {
