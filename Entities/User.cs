@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hermes.Identity.Auth;
 using Hermes.Identity.Command.User;
 using Hermes.Identity.Common;
 using Hermes.Identity.Services;
@@ -18,6 +19,7 @@ namespace Hermes.Identity.Entities
         public string Password { get; protected set; }
 
         public string Role { get; private set; }
+        public IEnumerable<string> Permissions { get; private set; }
 
         public DateTime CreatedAt { get; protected set; }
 
@@ -28,13 +30,15 @@ namespace Hermes.Identity.Entities
 
         }
 
-        public User(string email, string name, IEnumerable<string> permissions = null)
+        public User(string email, string name, string password, string role, IEnumerable<string> permissions)
         {
             Id = Guid.NewGuid();
-            SetName(name); 
+            SetName(name);
             SetEmail(email);
+            Password = password;
             CreatedAt = DateTime.UtcNow;
-            SetRole("admin");
+            SetRole(role);
+            Permissions = permissions ?? Enumerable.Empty<string>();
         }
 
         public void SetName(string name)
@@ -66,7 +70,8 @@ namespace Hermes.Identity.Entities
             Password = passwordService.Hash(password);
         }
 
-        public void SetUpdateTime() {
+        public void SetUpdateTime()
+        {
             UpdatedAt = DateTime.UtcNow;
         }
 

@@ -1,7 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Hermes.Identity.Auth;
 using Hermes.Identity.Common;
 using Hermes.Identity.Dto;
 using Hermes.Identity.Entities;
@@ -14,30 +14,15 @@ namespace Hermes.Identity.Services
     {
         private readonly ICosmosRepository userRepository;
 
-        private readonly IPasswordService _passwordService;
+        private readonly IPasswordService passwordService;
 
         private readonly IMapper mapper;
 
         public UserService(ICosmosRepository userRepository, IPasswordService passwordService, IMapper mapper)
         {
-            this._passwordService = passwordService;
+            this.passwordService = passwordService;
             this.userRepository = userRepository;
             this.mapper = mapper;
-        }
-
-        public async Task Register(string name, string email, string password)
-        {
-            var user = await userRepository.GetByEmail(email);
-
-            if (user != null)
-            {
-                throw new IdentityException($"User with provided {email} is already in use exist!");
-            }
-
-            var newUser = new User(email, name);
-            newUser.SetPassword(password, _passwordService);
-
-            await userRepository.Add(mapper.Map<User, UserDocument>(newUser));
         }
 
         public async Task Update(Guid id, string name, string email, string password)
@@ -49,7 +34,7 @@ namespace Hermes.Identity.Services
             }
             user.SetName(name);
             user.SetEmail(email);
-            user.SetPassword(password, _passwordService);
+            user.SetPassword(password, passwordService);
             await userRepository.Update(mapper.Map<User, UserDocument>(user));
         }
 

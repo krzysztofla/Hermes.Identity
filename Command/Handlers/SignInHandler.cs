@@ -18,7 +18,7 @@ namespace Hermes.Identity.Command.Handlers
         }
         public async Task Handle(SignIn command)
         {
-
+            await identityService.SignIn(command);
         }
     }
 }

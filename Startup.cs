@@ -32,32 +32,32 @@ namespace Hermes.Identity
         {
             builder.RegisterModule(new ContainerModule(Configuration));
         }
-        public void ConfigureServices(IServiceCollection services, IApplicationBuilder app)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
             services.AddLogging();
             services.AddControllers();
 
-            var jwtSettings = app.ApplicationServices.GetService<JwtSettings>();
-            var key = Encoding.ASCII.GetBytes(jwtSettings.Secret);
+            //var jwtSettings = app.ApplicationServices.GetService<JwtSettings>();
+            //var key = Encoding.ASCII.GetBytes(jwtSettings.Secret);
 
-            services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(x =>
-            {
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            });
+            //services.AddAuthentication(x =>
+            //{
+            //    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //})
+            //.AddJwtBearer(x =>
+            //{
+            //    x.RequireHttpsMetadata = false;
+            //    x.SaveToken = true;
+            //    x.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateIssuerSigningKey = true,
+            //        IssuerSigningKey = new SymmetricSecurityKey(key),
+            //        ValidateIssuer = false,
+            //        ValidateAudience = false
+            //    };
+            //});
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime applicationLifetime)
         {

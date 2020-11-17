@@ -22,12 +22,12 @@ namespace Hermes.Identity.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateUser command)
-        {
-            await SendAsync(command);
+        //public async Task<IActionResult> Post([FromBody] CreateUser command)
+        //{
+        //    await SendAsync(command);
 
-            return Created($"users/{command.Email}", null);
-        }
+        //    return Created($"users/{command.Email}", null);
+        //}
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)

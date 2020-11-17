@@ -11,8 +11,6 @@ namespace Hermes.Identity.Services
 {
     public interface IUserService : IService
     {
-        Task Register(string name, string email, string password);
-
         Task Update(Guid id, string name, string email, string password);
         
         Task Delete(Guid id);

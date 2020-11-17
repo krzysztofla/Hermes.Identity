@@ -12,6 +12,6 @@ namespace Hermes.Identity.Services
     public interface IIdentityService
     {
         Task<AuthDto> SignIn(SignIn command);
-        Task SignUp(SignIn command);
+        Task SignUp(SignUp command);
     }
 }

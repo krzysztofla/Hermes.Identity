@@ -11,13 +11,16 @@ namespace Hermes.Identity.Command.Identity
         public string Email { get; }
         public string Password { get; }
         public string Role { get; }
+        public string Name { get; set; }
+        public IEnumerable<string> Permissions { get; set; }
 
-        public SignUp(Guid userId, string email, string password, string role)
+        public SignUp(string email, string name, string password, string role, IEnumerable<string> permissions)
         {
-            UserId = userId == Guid.Empty ? Guid.NewGuid() : userId;
             Email = email;
+            Name = name;
             Password = password;
             Role = role;
+            Permissions = permissions;
         }
     }
 }
