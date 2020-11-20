@@ -3,17 +3,17 @@ namespace Hermes.Identity.Auth
 {
     public class PasswordService : IPasswordService
     {
-        private readonly IPasswordHasher<IPasswordService> _passwordHasher;
+        private readonly IPasswordHasher<IPasswordService> passwordHasher;
 
         public PasswordService(IPasswordHasher<IPasswordService> passwordHasher)
         {
-            _passwordHasher = passwordHasher;
+            this.passwordHasher = passwordHasher;
         }
 
         public bool IsValid(string hash, string password)
-            => _passwordHasher.VerifyHashedPassword(this, hash, password) != PasswordVerificationResult.Failed;
+            => passwordHasher.VerifyHashedPassword(this, hash, password) != PasswordVerificationResult.Failed;
 
         public string Hash(string password)
-            => _passwordHasher.HashPassword(this, password);
+            => passwordHasher.HashPassword(this, password);
     }
 }

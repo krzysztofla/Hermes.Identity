@@ -30,15 +30,15 @@ namespace Hermes.Identity.Services
             this.jwtProvider = jwtProvider;
         }
 
-        public async Task<AuthDto> SignIn(SignIn command)
+        public async Task<AuthDto> SignIn(SignIn query)
         {
-            var user = await cosmosRepository.GetByEmail(command.Email);
-            if (user is null || !passwordService.IsValid(user.Password, command.Password))
+            var user = await cosmosRepository.GetByEmail(query.Email);
+            if (user is null || !passwordService.IsValid(user.Password, query.Password))
             {
                 throw new NotImplementedException();
             }
 
-            if (!passwordService.IsValid(user.Password, command.Password))
+            if (!passwordService.IsValid(user.Password, query.Password))
             {
                 throw new NotImplementedException();
             }
@@ -53,7 +53,7 @@ namespace Hermes.Identity.Services
 
             logger.LogInformation($"User with id: {user.Id} has been authenticated.");
 
-            return null;
+            return auth;
         }
 
         public async Task SignUp(SignUp command)

@@ -1,14 +1,11 @@
 ﻿using Hermes.Identity.Command.Identity;
-using Hermes.Identity.Command.User;
+using Hermes.Identity.Dto;
 using Hermes.Identity.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace Hermes.Identity.Command.Handlers
+namespace Hermes.Identity.Query.Handlers
 {
-    public class SignInHandler : ICommandHandler<SignIn>
+    public class SignInHandler : IQueryHandler<SignIn, AuthDto>
     {
         private readonly IIdentityService identityService;
 
@@ -16,9 +13,9 @@ namespace Hermes.Identity.Command.Handlers
         {
             this.identityService = identityService;
         }
-        public async Task Handle(SignIn command)
+        public async Task<AuthDto> Handle(SignIn query)
         {
-            await identityService.SignIn(command);
+           return await identityService.SignIn(query);
         }
     }
 }

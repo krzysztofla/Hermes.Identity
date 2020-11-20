@@ -14,6 +14,7 @@ namespace Hermes.Identity.Mongo.Documents
         public string Role { get; set; }
         public string Password { get; set; }
         public DateTime CreatedAt { get; set; }
+        public IEnumerable<string> Permissions { get; set; }
 
         public override string ToString()
         {

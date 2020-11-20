@@ -8,11 +8,13 @@ using Hermes.Identity.Entities;
 using Hermes.Identity.Query;
 using Hermes.Identity.Query.User;
 using Hermes.Identity.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.ServiceBus;
 
 namespace Hermes.Identity.Controllers
 {
+    [Authorize]
     public class IdentityController : ControllerBase
     {
         private readonly IUserService userService;
@@ -20,14 +22,6 @@ namespace Hermes.Identity.Controllers
         {
             this.userService = userService;
         }
-
-        [HttpPost]
-        //public async Task<IActionResult> Post([FromBody] CreateUser command)
-        //{
-        //    await SendAsync(command);
-
-        //    return Created($"users/{command.Email}", null);
-        //}
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)

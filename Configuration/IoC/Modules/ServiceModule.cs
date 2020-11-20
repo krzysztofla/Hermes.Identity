@@ -4,6 +4,7 @@ using AutoMapper;
 using Hermes.Identity.Auth;
 using Hermes.Identity.Common.Markers;
 using Hermes.Identity.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace Hermes.Identity.Configuration.IoC.Modules
 {
@@ -20,10 +21,6 @@ namespace Hermes.Identity.Configuration.IoC.Modules
 
             builder.RegisterType<Encrypter>()
                    .As<IEncrypter>()
-                   .SingleInstance();
-
-            builder.RegisterType<PasswordService>()
-                   .As<IPasswordService>()
                    .SingleInstance();
         }
     }

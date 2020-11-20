@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Hermes.Identity.Query;
 
 namespace Hermes.Identity.Command.Identity
 {
-    public class SignIn : ICommand
+    public class SignIn : IQuery
     {
         public string Email { get; set; }
         public string Password { get; set; }

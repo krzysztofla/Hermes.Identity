@@ -7,20 +7,11 @@ namespace Hermes.Identity.Command.Identity
 {
     public class SignUp : ICommand
     {
-        public Guid UserId { get; }
-        public string Email { get; }
-        public string Password { get; }
-        public string Role { get; }
+        public Guid UserId { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string Role { get; set; }
         public string Name { get; set; }
         public IEnumerable<string> Permissions { get; set; }
-
-        public SignUp(string email, string name, string password, string role, IEnumerable<string> permissions)
-        {
-            Email = email;
-            Name = name;
-            Password = password;
-            Role = role;
-            Permissions = permissions;
-        }
     }
 }
