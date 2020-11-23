@@ -8,12 +8,21 @@
   },
   "initial": {
     "name": "Hermes",
-    "seedData": false
+    "seedData": true,
+    "initializer": "Cosmos"
   },
   "AllowedHosts": "*",
+  "jwt": {
+    "secret": ""
+  },
   "mongo": {
     "connectionString": "",
     "database": ""
+  },
+  "cosmos": {
+    "connectionString": "",
+    "database": "",
+    "container": ""
   },
   "serviceBus": {
     "connectionString": "",
