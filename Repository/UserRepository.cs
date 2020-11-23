@@ -7,7 +7,7 @@ using MongoDB.Driver;
 
 namespace Hermes.Identity.Repository
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : IMongoRepository
     {
         private readonly IMongoCollection<UserDocument> _context;
 
@@ -16,7 +16,7 @@ namespace Hermes.Identity.Repository
         public UserRepository(IMongoDatabase context, IMapper mapper)
         {
             _mapper = mapper;
-            _context = context.GetCollection<UserDocument>("UserDocument");
+            _context = context.GetCollection<UserDocument>("Users");
         }
 
         public async Task Add(UserDocument userDocument)

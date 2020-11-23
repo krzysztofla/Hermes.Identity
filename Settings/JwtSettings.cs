@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Hermes.Identity.Services
+namespace Hermes.Identity.Settings
 {
-    interface IServiceBusQueueClient
+    public class JwtSettings
     {
+        public string Secret { get; set; }
     }
 }

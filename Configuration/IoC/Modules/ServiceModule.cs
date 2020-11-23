@@ -1,8 +1,10 @@
 using System.Reflection;
 using Autofac;
 using AutoMapper;
+using Hermes.Identity.Auth;
 using Hermes.Identity.Common.Markers;
 using Hermes.Identity.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace Hermes.Identity.Configuration.IoC.Modules
 {

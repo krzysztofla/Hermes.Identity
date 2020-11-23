@@ -1,8 +1,5 @@
 ﻿using Hermes.Identity.Query.User;
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Hermes.Identity.Entities;
 using Hermes.Identity.Services;
 using Hermes.Identity.Dto;
 
