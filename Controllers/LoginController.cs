@@ -3,8 +3,8 @@ using Hermes.Identity.Command.Identity;
 using Hermes.Identity.Dto;
 using Hermes.Identity.Query;
 using Hermes.Identity.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace Hermes.Identity.Controllers
@@ -18,6 +18,7 @@ namespace Hermes.Identity.Controllers
             this.userService = userService;
         }
 
+        [AllowAnonymous]
         [Route("sign-up")]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] SignUp command)
@@ -26,7 +27,7 @@ namespace Hermes.Identity.Controllers
             return Created($"users/{command.Email}", null);
         }
 
-
+        [AllowAnonymous]
         [Route("sign-in")]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] SignIn query)

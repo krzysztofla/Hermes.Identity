@@ -1,13 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Hermes.Identity.Command;
 using Hermes.Identity.Query;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hermes.Identity.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public abstract class ControllerBase : Controller
