@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Hermes.Identity.Controllers
 {
-    [Authorize]
     public class IdentityController : ControllerBase
     {
         private readonly IUserService userService;

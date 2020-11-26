@@ -34,7 +34,6 @@ namespace Hermes.Identity.ServiceBus
             }
             catch (Exception exception)
             {
-
                 logger.LogInformation($"{DateTime.Now} :: Exception: {exception.Message}");
             }
         }
