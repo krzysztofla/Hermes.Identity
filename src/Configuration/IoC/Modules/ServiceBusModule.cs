@@ -1,12 +1,7 @@
 ﻿using Autofac;
-using Hermes.Identity.Services;
 using Hermes.Identity.Settings;
 using Microsoft.Azure.ServiceBus;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Hermes.Identity.Configuration.IoC.Modules
 {
