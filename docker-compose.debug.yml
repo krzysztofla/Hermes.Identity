@@ -9,9 +9,9 @@ services:
       context: .
       dockerfile: src/Dockerfile
     ports:
-      - 80
+      - 8001
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_URLS=http://+:8001
     volumes:
       - ~/.vsdbg:c:\remote_debugger:rw

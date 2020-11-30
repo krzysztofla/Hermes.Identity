@@ -1,6 +1,3 @@
-using System;
-using System.Runtime.Serialization;
-
 namespace Hermes.Identity.Common
 {
     public class IdentityException : DomainException
@@ -10,6 +7,11 @@ namespace Hermes.Identity.Common
         public IdentityException(string message) : base(message)
         {
 
+        }
+
+        public IdentityException(string message, string code) : base(message)
+        {
+            Code = code;
         }
     }
 }

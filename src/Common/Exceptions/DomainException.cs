@@ -13,5 +13,9 @@ namespace Hermes.Identity.Common
         protected DomainException(string message) : base(message)
         {
         }
+        protected DomainException(string message, string code) : base(message)
+        {
+            Code = code;
+        }
     }
 }
