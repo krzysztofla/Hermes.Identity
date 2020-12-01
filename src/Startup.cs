@@ -64,7 +64,8 @@ namespace Hermes.Identity
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
+                    ValidIssuer = "Hermes",
+                    ValidateIssuer = true,
                     ValidateAudience = false
                 };
             });
