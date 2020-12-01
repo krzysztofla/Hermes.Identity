@@ -4,8 +4,6 @@ using Microsoft.Azure.ServiceBus;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,6 +27,7 @@ namespace Hermes.Identity.ServiceBus
                 {
                     var messageBody = JsonConvert.SerializeObject(@event);
                     var message = new Message(Encoding.UTF8.GetBytes(messageBody));
+                    message.CorrelationId = Guid.NewGuid().ToString("N");
                     await queueClient.SendAsync(message);
                 }
             }

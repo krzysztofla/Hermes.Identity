@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Hermes.Identity.Auth;
 using Hermes.Identity.Command.Identity;
+using Hermes.Identity.Common;
 using Hermes.Identity.Dto;
 using Hermes.Identity.Entities;
 using Hermes.Identity.Events.Identity;
@@ -45,12 +46,12 @@ namespace Hermes.Identity.Services
             var user = await cosmosRepository.GetByEmail(query.Email);
             if (user is null || !passwordService.IsValid(user.Password, query.Password))
             {
-                throw new NotImplementedException();
+                throw new IdentityException($"Wrong password or username", IdentityErrorCodes.invalid_login_or_password);
             }
 
             if (!passwordService.IsValid(user.Password, query.Password))
             {
-                throw new NotImplementedException();
+                throw new IdentityException($"Wrong password or username", IdentityErrorCodes.invalid_login_or_password);
             }
             var claims = user.Permissions.Any()
                             ? new Dictionary<string, IEnumerable<string>>
@@ -59,7 +60,6 @@ namespace Hermes.Identity.Services
                             }
                             : null;
             var auth = jwtProvider.Create(user.Id, user.Role, claims: claims);
-            //auth.RefreshToken = await refreshTokenService.CreateAsync(user.Id);
 
             logger.LogInformation($"User with id: {user.Id} has been authenticated.");
             await messageBroker.SendMessagesAsync(new SignedIn(user.Id, user.Email, user.Role));
@@ -73,7 +73,7 @@ namespace Hermes.Identity.Services
             if (user is { })
             {
                 logger.LogError($"Email already in use: {command.Email}");
-                throw new NotImplementedException(command.Email);
+                throw new IdentityException($"Email already in use: {command.Email}", IdentityErrorCodes.user_in_use);
             }
 
             var role = string.IsNullOrWhiteSpace(command.Role) ? "user" : command.Role.ToLowerInvariant();
