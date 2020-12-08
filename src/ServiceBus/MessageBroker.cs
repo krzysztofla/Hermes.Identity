@@ -28,6 +28,7 @@ namespace Hermes.Identity.ServiceBus
                     var messageBody = JsonConvert.SerializeObject(@event);
                     var message = new Message(Encoding.UTF8.GetBytes(messageBody));
                     message.CorrelationId = Guid.NewGuid().ToString("N");
+                    message.MessageId = Guid.NewGuid().ToString("N");
                     await queueClient.SendAsync(message);
                 }
             }
